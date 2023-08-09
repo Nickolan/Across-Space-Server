@@ -9,7 +9,9 @@ export class PlanetsService {
     constructor(@InjectRepository(Planet) private planetService: Repository<Planet>){}
 
     getPlanets(){
-        const planets = this.planetService.find()
+        const planets = this.planetService.find({
+            relations: ['satellite']
+        })
         return planets;
     }
 
@@ -17,12 +19,18 @@ export class PlanetsService {
         const planet = this.planetService.findOne({
             where: {
                 id
-            }
+            },
+            relations: ['satellite']
         })
+        if (!planet) {
+            return new HttpException('Planet not found', HttpStatus.NOT_FOUND)
+        }
+
+        return planet;
     }
 
     async createPlanet(planet: CreatePlanetDto){
-        const planetFound = await this.planetService.find({
+        const planetFound = await this.planetService.findOne({
             where: {
                 name: planet.name
             }

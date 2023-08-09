@@ -1,4 +1,5 @@
 import { Entity, Column,  PrimaryGeneratedColumn, OneToMany} from "typeorm";
+import { Satellite } from "src/satellites/satellite.entity";
 
 @Entity({name: "planets"})
 export class Planet{
@@ -13,4 +14,7 @@ export class Planet{
 
     @Column()
     distanceWithEarth: number;
+
+    @OneToMany(() => Satellite, satellite => satellite.planet)
+    satellite: Satellite[];
 }

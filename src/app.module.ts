@@ -5,6 +5,7 @@ import { UsersController } from './users/users.controller';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { PlanetsModule } from './planets/planets.module';
+import { SatellitesModule } from './satellites/satellites.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -18,7 +19,8 @@ import { PlanetsModule } from './planets/planets.module';
     synchronize: true
   }),
   UsersModule,
-  PlanetsModule],
+  PlanetsModule,
+  SatellitesModule],
   controllers: [AppController],
   providers: [AppService],
 })

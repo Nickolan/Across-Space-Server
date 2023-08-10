@@ -3,6 +3,7 @@ import { createUserDto } from './dto/create-user.dto';
 import { UsersService } from "./users.service";
 import { User } from './user.entity';
 import { updateUserDto } from './dto/update-user.dto';
+import { LoginDto } from './dto/login.dto';
 
 @Controller('users')
 export class UsersController {
@@ -24,6 +25,11 @@ export class UsersController {
     createUser(@Body() newUser: createUserDto){
         return this.usersService.createUser(newUser);
     }
+
+    @Post('/login')
+    loginUser(@Body() User: LoginDto){
+        return this.usersService.login(User);
+    }   
 
     @Delete(':id')
     deleteUser(@Param('id', ParseIntPipe) userId: number){

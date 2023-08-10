@@ -1,9 +1,10 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus, Next } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User, AccessLevel } from './user.entity';
+import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { createUserDto } from './dto/create-user.dto';
 import { updateUserDto } from './dto/update-user.dto';
+import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class UsersService {
@@ -82,5 +83,21 @@ export class UsersService {
         const updatedUser = Object.assign(userFound, {AccessLevel: "Admin"})
 
         return this.userRepository.save(updatedUser);
+    }
+
+    async login(user: LoginDto){
+        const accessUser = await this.userRepository.findOne({
+            where: {
+                email: user.email,
+                password: user.password
+            }
+        })
+
+        if (!accessUser) {
+            return new HttpException('Access denied', HttpStatus.NOT_ACCEPTABLE)
+        }
+
+        return {Access: true}
+
     }
 }

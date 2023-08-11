@@ -13,6 +13,9 @@ export class Planet{
     size: number;
 
     @Column()
+    image: string;
+
+    @Column()
     distanceWithEarth: number;
 
     @OneToMany(() => Satellite, satellite => satellite.planet)

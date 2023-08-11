@@ -13,6 +13,9 @@ export class Satellite{
     size: number;
 
     @Column()
+    image: string;
+
+    @Column()
     planetId: number;
 
     @ManyToOne(() => Planet, planet => planet.satellite)

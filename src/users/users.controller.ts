@@ -18,11 +18,12 @@ export class UsersController {
     @Get(':id')
     async getOneUser(@Param('id', ParseIntPipe) userId: number){
         const response = await this.usersService.getOneUser(userId);
+        
         return response;
     }
 
-    @Post()
-    createUser(@Body() newUser: createUserDto){
+    @Post('/signup')
+    signupUser(@Body() newUser: createUserDto){
         return this.usersService.createUser(newUser);
     }
 

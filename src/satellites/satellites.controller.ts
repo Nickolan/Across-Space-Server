@@ -13,9 +13,9 @@ export class SatellitesController {
         return this.satelliteService.getAll();
     }
 
-    @Get(':id')
-    getOneSatellite(@Param('id', ParseIntPipe) id: number){
-        return this.satelliteService.getOne(id);
+    @Get(':satelliteName')
+    getOneSatellite(@Param('satelliteName') satelliteName: string){
+        return this.satelliteService.getOne(satelliteName);
     }
 
     @Post()

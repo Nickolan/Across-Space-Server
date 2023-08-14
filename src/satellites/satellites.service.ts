@@ -15,10 +15,10 @@ export class SatellitesService {
         return this.satelliteService.find();
     }
 
-    async getOne(id:number){
+    async getOne(satelliteName:string){
         const satellite = await this.satelliteService.findOne({
             where: {
-                id
+                name: satelliteName
             }
         });
         if (!satellite) {

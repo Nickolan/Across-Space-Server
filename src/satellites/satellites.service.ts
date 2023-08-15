@@ -30,7 +30,7 @@ export class SatellitesService {
 
     async createOne(newSatellite: CreateSatelliteDto){
 
-        const planetFound = await this.plantesService.getOnePlanet(newSatellite.planetId)
+        const planetFound = await this.plantesService.getOnePlanetById(newSatellite.planetId)
 
         if (!planetFound) return new HttpException('Planet not found', HttpStatus.NOT_FOUND)
 

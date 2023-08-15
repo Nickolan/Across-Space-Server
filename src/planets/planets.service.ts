@@ -15,7 +15,28 @@ export class PlanetsService {
         return planets;
     }
 
-    getOnePlanet(id: number){
+    getOnePlanet(planetName: string){
+
+        const planet = this.planetService.createQueryBuilder('planets')
+        .leftJoinAndSelect('planets.satellite', 'satellite')
+        .where('planets.name LIKE :name', { name: `%${planetName}%` })
+        .getMany();
+
+        const secondPlanet = this.planetService.findOne({
+            where: {
+                name: planetName
+            },
+            relations: ['satellite']
+        })
+
+        if (!planet) {
+            return new HttpException('Planet not found', HttpStatus.NOT_FOUND)
+        }
+
+        return planet;
+    }
+
+    getOnePlanetById(id: number){
         const planet = this.planetService.findOne({
             where: {
                 id
@@ -23,6 +44,7 @@ export class PlanetsService {
             relations: ['satellite']
         })
         if (!planet) {
+            
             return new HttpException('Planet not found', HttpStatus.NOT_FOUND)
         }
 

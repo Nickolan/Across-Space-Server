@@ -88,16 +88,20 @@ export class UsersService {
     async login(user: LoginDto){
         const accessUser = await this.userRepository.findOne({
             where: {
-                email: user.email,
-                password: user.password
+                email: user.email
             }
         })
 
         if (!accessUser) {
-            return new HttpException('Access denied', HttpStatus.NOT_ACCEPTABLE)
+            return {Access: false, Message: "This account does not exist"}
+            //return new HttpException('Access denied', HttpStatus.NOT_ACCEPTABLE)
+        } else {
+            if (accessUser.password === user.password) {
+                return {Access: true, Message: "Access allowed, Welcome"}
+            } else{
+                return {Access: false, Message: "Password incorrect"}
+            }
         }
-
-        return {Access: true}
 
     }
 }

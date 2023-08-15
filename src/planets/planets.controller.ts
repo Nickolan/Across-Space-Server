@@ -14,7 +14,12 @@ export class PlanetsController {
 
     @Get(':id')
     getOne(@Param('id', ParseIntPipe) id: number){
-        return this.planetService.getOnePlanet(id)
+        return this.planetService.getOnePlanetById(id)
+    }
+
+    @Get('/name/:planetName')
+    getOnebyName(@Param('planetName') planetName: string){
+        return this.planetService.getOnePlanet(planetName)
     }
 
     @Post()

@@ -4,6 +4,7 @@ import { UsersService } from "./users.service";
 import { User } from './user.entity';
 import { updateUserDto } from './dto/update-user.dto';
 import { LoginDto } from './dto/login.dto';
+import { AdminDto } from './dto/admin-check.dto';
 
 @Controller('users')
 export class UsersController {
@@ -31,6 +32,11 @@ export class UsersController {
     loginUser(@Body() User: LoginDto){
         return this.usersService.login(User);
     }   
+
+    @Post('/admin/access')
+    adminAccess(@Body() User: AdminDto){
+        return this.usersService.adminAccess(User);
+    }
 
     @Delete(':id')
     deleteUser(@Param('id', ParseIntPipe) userId: number){

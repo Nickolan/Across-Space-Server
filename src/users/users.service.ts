@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { createUserDto } from './dto/create-user.dto';
 import { updateUserDto } from './dto/update-user.dto';
 import { LoginDto } from './dto/login.dto';
+import { AdminDto } from './dto/admin-check.dto';
 
 @Injectable()
 export class UsersService {
@@ -103,5 +104,24 @@ export class UsersService {
             }
         }
 
+    }
+
+    async adminAccess(user: AdminDto){
+        const accessUser = await this.userRepository.findOne({
+            where: {
+                email: user.email
+            }
+        })
+
+        if (!accessUser) {
+            return {Access: false, Message: "This account does not exist"}
+            //return new HttpException('Access denied', HttpStatus.NOT_ACCEPTABLE)
+        } else {
+            if (accessUser.password === user.password && accessUser.username === user.username && accessUser.AccessLevel === 'Admin') {
+                return {Access: true, Message: "Access allowed, Welcome Administrator"}
+            } else{
+                return {Access: false, Message: "Access denied"}
+            }
+        }
     }
 }

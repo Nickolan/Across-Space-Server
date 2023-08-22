@@ -62,6 +62,10 @@ export class PlanetsService {
             return new HttpException('Planet already exists', HttpStatus.CONFLICT)
         }
 
+        if(planet.image === '' || !planet.image){
+            planet.image = 'https://i.pinimg.com/474x/86/77/7e/86777e0a74d4ae01ee489fe74cf74d5b.jpg'
+        }
+
         const newPlanet = this.planetService.create(planet);
         return this.planetService.save(newPlanet);
     }
